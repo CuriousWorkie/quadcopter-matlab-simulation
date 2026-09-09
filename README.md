@@ -27,7 +27,7 @@ The project was developed using the following resources as reference and learnin
 
 The original resources were used to understand the structure of the quadcopter dynamic model, equations of motion, coordinate transformations, and MATLAB implementation.
 
-The current repository is an independently developed continuation of that learning foundation, with modifications and additional implementations including PID-based control, real-time visualization, trajectory tracking, simulation data logging, and output generation for further analysis.
+This project builds upon the initial implementation and concepts provided in the referenced resources, with modifications and additional functionality developed as part of this project.
 
 **Credit:** SKYnSPACE for the original educational material and implementation reference.
 
