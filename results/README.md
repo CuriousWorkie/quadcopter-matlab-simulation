@@ -12,7 +12,7 @@ This folder contains representative outputs generated from the MATLAB quadcopter
 
 ## Figure 3 — Euler Angles and Angular Velocity
 
-![Euler Angles and Angular Velocity](Euler-angles-and-Angular-Velocity.png)
+![Euler Angles and Angular Velocity](Euler-angles-and-Angular-Velocities.png)
 
 ## Figure 4 — Thrust and Control Moments
 
