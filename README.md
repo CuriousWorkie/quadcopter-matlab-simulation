@@ -16,6 +16,21 @@ MATLAB-based simulation of a 6-DOF quadcopter using rigid-body dynamics and PID 
 - Live 3D trajectory tracking
 - Simulation data export to Excel for future data-driven / ML applications
 
+## References & Acknowledgements
+
+The initial foundation and learning reference for the quadcopter modelling implemented in this project was the **AE450 Flight Dynamics and Control** material by **SKYnSPACE**.
+
+The project was developed using the following resources as reference and learning material:
+
+* **GitHub Repository:** [SKYnSPACE/AE450](https://github.com/SKYnSPACE/AE450)
+* **Video Tutorial:** [Introduction to Quadcopter Modeling & Simulation](https://www.youtube.com/watch?v=7F9cG64kRxI)
+
+The original resources were used to understand the structure of the quadcopter dynamic model, equations of motion, coordinate transformations, and MATLAB implementation.
+
+The current repository is an independently developed continuation of that learning foundation, with modifications and additional implementations including PID-based control, real-time visualization, trajectory tracking, simulation data logging, and output generation for further analysis.
+
+**Credit:** SKYnSPACE for the original educational material and implementation reference.
+
 ## Project Status
 
 This project is currently under development as part of a study-oriented project on drone modelling and autonomous disaster search and rescue.
