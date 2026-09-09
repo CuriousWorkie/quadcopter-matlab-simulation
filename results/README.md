@@ -4,11 +4,11 @@ This folder contains representative outputs generated from the MATLAB quadcopter
 
 ## Figure 1 — 3D Drone Visualization
 
-![Position and Velocity](Position-and-Velocity.png)
+
 
 ## Figure 2 — Position and Linear Velocity
 
-*Add screenshot here.*
+![Position and Velocity](Position-and-Velocity.png)
 
 ## Figure 3 — Euler Angles and Angular Velocity
 
