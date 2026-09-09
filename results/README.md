@@ -4,7 +4,7 @@ This folder contains representative outputs generated from the MATLAB quadcopter
 
 ## Figure 1 — 3D Drone Visualization
 
-
+![Simulation](Simulation.png)
 
 ## Figure 2 — Position and Linear Velocity
 
@@ -12,15 +12,15 @@ This folder contains representative outputs generated from the MATLAB quadcopter
 
 ## Figure 3 — Euler Angles and Angular Velocity
 
-*Add screenshot here.*
+![Euler Angles and Angular Velocity](Euler-angles-and-Angular-Velocity.png)
 
 ## Figure 4 — Thrust and Control Moments
 
-*Add screenshot here.*
+![Thrust and Moments](Thurst-and-Moments.png)
 
 ## Figure 5 — Live 3D Trajectory
 
-*Add screenshot here.*
+![Live Trajectory](Live-Trajectory.png)
 
 ## Sample Simulation Dataset
 
