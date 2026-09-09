@@ -28,3 +28,5 @@ A sample Excel dataset generated from the simulation is included in this folder.
 
 * **File:** `sample_simulation.xlsx`
 * Contains time history of the drone states and control inputs.
+
+![Data](Data.png)
