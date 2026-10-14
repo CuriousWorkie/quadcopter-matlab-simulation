@@ -14,9 +14,9 @@ drone1_params = containers.Map({'mass', 'armLength', 'Ixx', 'Iyy', 'Izz'}, ...
 
 %watch out for the transpose symbol in every martix. 
 drone1_initStates = [0, 0, -6, ...      % X, Y, Z
-                     0, 0, 0, ...      % dX, dY, dZ
-                     0, 0, 0, ...      % phi, theta, psi
-                     0, 0, 0]';        % p, q, r
+                     3, 4, 0, ...       % dX, dY, dZ
+                     0, 0, 0, ...       % phi, theta, psi
+                     0, 0, 0]';         % p, q, r
 
 drone1_initInputs = [0, 0, 0, 0]';     % u1, u2, u3, u4 (T, M1, M2, M3)
 
@@ -33,17 +33,37 @@ drone1_gains = containers.Map(...
      'P_psi', 'I_psi', 'D_psi', ...
      'P_zdot', 'I_zdot', 'D_zdot'}, ...
     {1, 0, 0, ...
-     0, 0, 0, ...
-     0, 0, 0, ...
-     0, 0, 0}); %contains all the K values needed for PID control. Give non zero values for better simulation results.
+     1, 0, 0, ...
+     1, 0, 0, ...
+     5, 0, 0}); %contains all the K values needed for PID control
 
-simulationTime = 5;
+simulationTime = 1;
 
 drone1 = Drone(drone1_params, ...
                drone1_initStates, ...
                drone1_initInputs, ...
                drone1_gains, ...
                simulationTime);    %Calls the class Drone and indirectly calls the function obj
+
+%% EXCEL DATA LOGGING
+
+
+filename = sprintf('Drone_Simulation_%s.xlsx', ...
+    datestr(now,'yyyymmdd_HHMMSS'));
+
+data_names = { ...
+    'Time', ...
+    'X', 'Y', 'Z', ...
+    'Xdot', 'Ydot', 'Zdot', ...
+    'Phi', 'Theta', 'Psi', ...
+    'p', 'q', 'r', ...
+    'T', 'M1', 'M2', 'M3'};
+
+numSteps = ceil(simulationTime / drone1.dt);
+
+data_log = zeros(numSteps,17);
+
+data_row = 0;
 
 %% Init. 3D Fig.
 
@@ -68,6 +88,7 @@ zlabel('Z[m]');
 hold(gca, 'on');  %makes sure previous plot stays visible while the next one is being plotted
 
 drone1_state = drone1.GetState();
+
 
 wHb = [RPY2Rot(drone1_state(7:9))'  drone1_state(1:3);
        0 0 0 1];           %transformation matrix used to convert the drone body cordinates to ground cordinates
@@ -137,7 +158,7 @@ hold on;
 commandSig(1) = 5.0*D2R; %phi
 commandSig(2) = 0.0*D2R; %theta
 commandSig(3) = 0.0*D2R; %psi
-commandSig(4) = 0.0; %zdot
+commandSig(4) = 5.0; %zdot
 
 for i = (1:simulationTime/0.01)
 
@@ -145,6 +166,29 @@ for i = (1:simulationTime/0.01)
     drone1.UpdateState();   %update every 0.01 second
 
     drone1_state = drone1.GetState();
+
+    %% STORE DATA FOR EXCEL
+
+    data_row = data_row + 1;
+
+    data_log(data_row,:) = [ ...
+        drone1.t, ...
+        drone1_state(1), ...      % X
+        drone1_state(2), ...      % Y
+        drone1_state(3), ...      % Z
+        drone1_state(4), ...      % Xdot
+        drone1_state(5), ...      % Ydot
+        drone1_state(6), ...      % Zdot
+        drone1_state(7)*R2D, ...  % Phi
+        drone1_state(8)*R2D, ...  % Theta
+        drone1_state(9)*R2D, ...  % Psi
+        drone1_state(10), ...     % p
+        drone1_state(11), ...     % q
+        drone1_state(12), ...     % r
+        drone1.u(1), ...          % T
+        drone1.u(2), ...          % M1
+        drone1.u(3), ...          % M2
+        drone1.u(4)];             % M3
     %% 3D Plot
     
     if ~ishandle(fig1)
@@ -210,3 +254,43 @@ for i = (1:simulationTime/0.01)
     drawnow ;
 end
     
+%% EXPORT DATA TO EXCEL
+
+data_log = data_log(1:data_row,:);
+
+data_table = array2table(data_log, ...
+    'VariableNames', data_names);
+
+writetable(data_table, filename, ...
+    'Sheet', 'Simulation_Data');
+
+
+%% SIMULATION PARAMETERS
+
+parameter_names = { ...
+    'Mass'; ...
+    'Arm_Length'; ...
+    'Ixx'; ...
+    'Iyy'; ...
+    'Izz'; ...
+    'Gravity'; ...
+    'Time_Step'; ...
+    'Simulation_Time'};
+
+parameter_values = [ ...
+    drone1.m; ...
+    drone1.l; ...
+    drone1.I(1,1); ...
+    drone1.I(2,2); ...
+    drone1.I(3,3); ...
+    drone1.g; ...
+    drone1.dt; ...
+    simulationTime];
+
+parameters_table = table(parameter_names, parameter_values, ...
+    'VariableNames', {'Parameter', 'Value'});
+
+writetable(parameters_table, filename, ...
+    'Sheet', 'Parameters');
+
+disp(['Simulation data saved to: ', filename]);
