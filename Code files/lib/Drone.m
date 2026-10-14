@@ -37,6 +37,7 @@ classdef Drone < handle
         theta_err_prev
         theta_err_sum
 
+        
         psi_des
         psi_err
         psi_err_prev
@@ -142,7 +143,6 @@ classdef Drone < handle
 
             phi   = obj.euler(1);
             theta = obj.euler(2);
-            psi = obj.euler(3);
             
             obj.dx(7:9) = [ 1  sin(phi)*tan(theta)  cos(phi)*tan(theta);
                             0  cos(phi)            -sin(phi);
@@ -176,6 +176,7 @@ classdef Drone < handle
              obj.phi_err   = obj.phi_des   - obj.euler(1);
              obj.theta_err = obj.theta_des - obj.euler(2);
              obj.psi_err   = obj.psi_des   - obj.euler(3);
+             obj.zdot_err = obj.zdot_des - obj.dr(3);
             
              %In digital signals, integral is replaced with sum of errors
              %and differential with difference
