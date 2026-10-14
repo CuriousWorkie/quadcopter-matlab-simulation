@@ -142,6 +142,7 @@ classdef Drone < handle
 
             phi   = obj.euler(1);
             theta = obj.euler(2);
+            psi = obj.euler(3);
             
             obj.dx(7:9) = [ 1  sin(phi)*tan(theta)  cos(phi)*tan(theta);
                             0  cos(phi)            -sin(phi);
